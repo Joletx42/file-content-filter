@@ -1,8 +1,5 @@
 package com.app.args;
 
-import com.app.processing.DataTypeDetector;
-import com.app.args.Parameter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,7 +9,7 @@ public class ArgsParser {
     private ArrayList<String> paramList = new ArrayList<>();
     private String pathToFiles;
     private String prefix;
-    private boolean recordMode;
+    private boolean recordMode = false;
     private char statisticsOption;
 
     public ArgsParser(String[] args) {

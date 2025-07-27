@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class DataTypeDetector {
     private ArrayList<String> stringList = new ArrayList<>();
-    private ArrayList<Integer> integerList = new ArrayList<>();
+    private ArrayList<Long> longList = new ArrayList<>();
     private ArrayList<Double> doubleList = new ArrayList<>();
 
     public void addArr(double number) {
         doubleList.add(number);
     }
 
-    public void addArr(int number) {
-        integerList.add(number);
+    public void addArr(long number) {
+        longList.add(number);
     }
 
     public void addArr(String str) {
@@ -23,8 +23,8 @@ public class DataTypeDetector {
         return stringList;
     }
 
-    public ArrayList<Integer> getIntList() {
-        return integerList;
+    public ArrayList<Long> getLongList() {
+        return longList;
     }
 
     public ArrayList<Double> getDoubleList() {
@@ -33,13 +33,13 @@ public class DataTypeDetector {
 
     public void clearAll() {
         stringList.clear();
-        integerList.clear();
+        longList.clear();
         doubleList.clear();
     }
 
-    public static boolean isInteger(String str) {
+    public static boolean isLong(String str) {
         try {
-            Integer.parseInt(str);
+            Long.parseLong(str);
             return true;
         } catch (NumberFormatException e) {
             return false;

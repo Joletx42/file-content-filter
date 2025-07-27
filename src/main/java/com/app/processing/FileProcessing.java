@@ -1,38 +1,58 @@
 package com.app.processing;
 
-import java.util.ArrayList;
-
-import javax.xml.crypto.Data;
+import java.util.List;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import com.app.args.ArgsParser;
-import com.app.processing.DataTypeDetector;
 
 public class FileProcessing {
     private ArgsParser parser;
+    private static final String FILES_DIR_PATH = "src/test/resources/testFiles";
 
     public FileProcessing(ArgsParser parser) {
         this.parser = parser;
     }
 
     public void processFiles() {
-        ArrayList<String> files = new ArrayList<>();
-        files = parser.getFileList();
-        int i = 0;
+        List<String> files = parser.getFileList();
 
-        File filesDir = new File("src\\test\\resoursec\\testFiles");
+        File analyzeFilesDir = new File(FILES_DIR_PATH);
         DataTypeDetector type = new DataTypeDetector();
 
-        while (i != files.size()) {
-            String currentFile = files.get(i);
+        analyzeFiles(files, analyzeFilesDir, type);
 
-            File file = new File(filesDir, currentFile);
+        List<Long> longList = type.getLongList();
+        List<Double> doubleList = type.getDoubleList();
+        List<String> strList = type.getStrList();
+
+        String currentDir = System.getProperty("user.dir");
+        String pathToFiles = parser.getPathToFiles();
+
+        File newFilesDir;
+        if (pathToFiles == null) {
+            newFilesDir = new File(currentDir);
+        } else {
+            newFilesDir = new File(currentDir, pathToFiles);
+        }
+
+        String prefixFileName = parser.getPrefix();
+        String prefix = (prefixFileName != null) ? prefixFileName : "";
+
+        createFile(parser, longList, newFilesDir, prefix + "integers.txt");
+        createFile(parser, doubleList, newFilesDir, prefix + "floats.txt");
+        createFile(parser, strList, newFilesDir, prefix + "strings.txt");
+    }
+
+    private static void analyzeFiles(List<String> files, File analyzeFilesDir, DataTypeDetector type) {
+        for (var currentFile : files) {
+
+            File file = new File(analyzeFilesDir, currentFile);
 
             if (file.exists()) {
                 try (BufferedReader reader = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
@@ -45,55 +65,8 @@ public class FileProcessing {
                     e.printStackTrace();
                 }
             } else {
-                System.out.println("Такого файла не существует");
+                System.out.println("Такого файла не существует: " + file);
             }
-
-            i++;
-        }
-
-        System.out.println(type.getIntList());
-        System.out.println(type.getDoubleList());
-        System.out.println(type.getStrList());
-
-        String currentDir = System.getProperty("user.dir");
-
-        String pathToFiles = parser.getPathToFiles();
-        File dir;
-        File newFile;
-
-        if (pathToFiles == null) {
-            newFile = new File(currentDir + File.separator + "String.txt");
-        } else {
-            newFile = new File(currentDir + File.separator + pathToFiles + File.separator + "String.txt");
-
-            dir = new File(currentDir + File.separator + pathToFiles); // <--- Здесь исправление
-            System.out.println(dir);
-
-            if (!dir.exists()) {
-                boolean dirsCreated = dir.mkdirs();
-                if (dirsCreated) {
-                    System.out.println("Папки созданы: " + dir.getAbsolutePath());
-                } else {
-                    System.out.println("Не удалось создать папки: " + dir.getAbsolutePath());
-                    return;
-                }
-            }
-        }
-
-        if (!newFile.exists()) {
-            try {
-                boolean fileCreated = newFile.createNewFile();
-                if (fileCreated) {
-                    System.out.println("Файл создан: " + newFile.getAbsolutePath());
-                } else {
-                    System.out.println("Файл не был создан: " + newFile.getAbsolutePath());
-                }
-            } catch (IOException e) {
-                System.out.println("Ошибка при создании файла: " + e.getMessage());
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Файл уже существует: " + newFile.getAbsolutePath());
         }
     }
 
@@ -104,18 +77,59 @@ public class FileProcessing {
             return;
         }
 
-        // Пример определения типа данных строки
-        if (DataTypeDetector.isInteger(line)) {
-            System.out.println(line + " - это целое число");
-            type.addArr(Integer
-                    .parseInt(line));
-        } else if (DataTypeDetector.isDouble(line)) {
-            System.out.println(line + " - это число с плавающей точкой");
-            type.addArr(Double
-                    .parseDouble(line));
-        } else {
-            System.out.println(line + " - это строка");
-            type.addArr(line);
+        try {
+            if (DataTypeDetector.isLong(line)) {
+                type.addArr(Long
+                        .parseLong(line));
+            } else if (DataTypeDetector.isDouble(line)) {
+                type.addArr(Double
+                        .parseDouble(line));
+            } else {
+                type.addArr(line);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Не удалось распарсить строку: " + line);
+            type.addArr(line); // Можно считать строкой, если парсинг не удался
         }
+    }
+
+    private static void createFile(ArgsParser parser, List<?> dataList, File filesDir, String fileName) {
+        if (dataList == null || dataList.isEmpty()) {
+            System.out.println(dataList + ": список пуст");
+            return;
+        }
+
+        File newFile = new File(filesDir, fileName);
+
+        if (!checkDirectoryExists(filesDir)) {
+            return;
+        }
+
+        boolean append = parser.getRecordMode();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(newFile, append))) {
+            for (var value : dataList) {
+                bw.write(value.toString());
+                bw.newLine();
+            }
+            System.out.println("Данные записаны в файл: " + newFile.getAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("Ошибка при записи в файл " + fileName + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
+    private static boolean checkDirectoryExists(File filesDir) {
+        if (!filesDir.exists()) {
+            if (filesDir.mkdirs()) {
+                System.out.println("Папки созданы: " + filesDir.getAbsolutePath());
+                return true;
+            } else {
+                System.out.println("Не удалось создать папки: " + filesDir.getAbsolutePath());
+                return false;
+            }
+        }
+
+        return true;
     }
 }
