@@ -10,7 +10,7 @@ public class ArgsParser {
     private final String[] initialArgs;
     private ArrayList<String> fileList = new ArrayList<>();
     private ArrayList<String> paramList = new ArrayList<>();
-    private String pathToStatictics;
+    private String pathToFiles;
     private String prefix;
     private boolean recordMode;
     private char statisticsOption;
@@ -29,7 +29,7 @@ public class ArgsParser {
                 if (param != null) {
                     switch (param) {
                         case PATH:
-                            pathToStatictics = initialArgs[i + 1];
+                            pathToFiles = initialArgs[i + 1];
                             i++;
                             break;
                         case PREFIX:
@@ -71,7 +71,7 @@ public class ArgsParser {
     }
 
     public String getPathToFiles() {
-        return pathToStatictics;
+        return pathToFiles;
     }
 
     public String getPrefix() {

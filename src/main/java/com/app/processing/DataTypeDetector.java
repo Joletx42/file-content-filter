@@ -19,15 +19,15 @@ public class DataTypeDetector {
         stringList.add(str);
     }
 
-    public ArrayList<String> getStrArray() {
+    public ArrayList<String> getStrList() {
         return stringList;
     }
 
-    public ArrayList<Integer> getIntArray() {
+    public ArrayList<Integer> getIntList() {
         return integerList;
     }
 
-    public ArrayList<Double> getDoubleArray() {
+    public ArrayList<Double> getDoubleList() {
         return doubleList;
     }
 
