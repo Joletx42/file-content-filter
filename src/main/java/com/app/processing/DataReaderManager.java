@@ -7,7 +7,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class DataReaderManager {
-    public static void analyzeFiles(List<String> files, File analyzeFilesDir, DataTypeDetector type) {
+    public static void distributeDataFromFiles(List<String> files, File analyzeFilesDir,
+            DataTypeDetector type) {
         for (var currentFile : files) {
 
             File file = new File(analyzeFilesDir, currentFile);

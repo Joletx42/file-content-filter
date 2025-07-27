@@ -1,3 +1,6 @@
 ﻿pom.xml
 target
 settings.json
+floats.txt
+integers.txt
+strings.txt

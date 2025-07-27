@@ -9,28 +9,20 @@ import java.util.List;
 import com.app.args.ArgsParser;
 
 public class DataWriterManager {
-    public static void createFile(ArgsParser parser, List<?> dataList, File filesDir, String fileName) {
+    public static void createAndWriteInFile(ArgsParser parser, List<?> dataList, File filesDir, String fileName) {
         if (dataList == null || dataList.isEmpty()) {
             System.out.println(dataList + ": список пуст");
             return;
         }
 
-        File newFile = new File(filesDir, fileName);
+        File file = new File(filesDir, fileName);
 
         if (!checkDirectoryExists(filesDir)) {
             return;
         }
 
-        boolean append = parser.getRecordMode();
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(newFile, append))) {
-            for (var value : dataList) {
-                bw.write(value.toString());
-                bw.newLine();
-            }
-            System.out.println("Данные записаны в файл: " + newFile.getAbsolutePath());
-        } catch (IOException e) {
-            System.out.println("Ошибка при записи в файл " + fileName + ": " + e.getMessage());
-            e.printStackTrace();
+        if (!writeInFile(parser, dataList, file, fileName)) {
+            return;
         }
 
     }
@@ -44,6 +36,33 @@ public class DataWriterManager {
                 System.out.println("Не удалось создать папки: " + filesDir.getAbsolutePath());
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    private static boolean writeInFile(ArgsParser parser, List<?> dataList, File file, String fileName) {
+        if (dataList == null || dataList.isEmpty()) {
+            System.out.println("Список пуст, запись не требуется.");
+            return false;
+        }
+
+        if (file == null) {
+            System.out.println("Файл не задан.");
+            return false;
+        }
+
+        boolean append = parser.getRecordMode();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, append))) {
+            for (var value : dataList) {
+                bw.write(value.toString());
+                bw.newLine();
+            }
+            System.out.println("Данные записаны в файл: " + file.getAbsolutePath());
+        } catch (IOException e) {
+            System.out.println("Ошибка при записи в файл " + fileName + ": " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
 
         return true;

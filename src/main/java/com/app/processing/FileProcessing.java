@@ -23,7 +23,7 @@ public class FileProcessing {
         File analyzeFilesDir = new File(FILES_DIR_PATH);
         DataTypeDetector type = new DataTypeDetector();
 
-        DataReaderManager.analyzeFiles(files, analyzeFilesDir, type);
+        DataReaderManager.distributeDataFromFiles(files, analyzeFilesDir, type);
 
         List<Long> longList = type.getLongList();
         List<Double> doubleList = type.getDoubleList();
@@ -42,8 +42,8 @@ public class FileProcessing {
         String prefixFileName = parser.getPrefix();
         String prefix = (prefixFileName != null) ? prefixFileName : "";
 
-        DataWriterManager.createFile(parser, longList, newFilesDir, prefix + "integers.txt");
-        DataWriterManager.createFile(parser, doubleList, newFilesDir, prefix + "floats.txt");
-        DataWriterManager.createFile(parser, strList, newFilesDir, prefix + "strings.txt");
+        DataWriterManager.createAndWriteInFile(parser, longList, newFilesDir, prefix + "integers.txt");
+        DataWriterManager.createAndWriteInFile(parser, doubleList, newFilesDir, prefix + "floats.txt");
+        DataWriterManager.createAndWriteInFile(parser, strList, newFilesDir, prefix + "strings.txt");
     }
 }
