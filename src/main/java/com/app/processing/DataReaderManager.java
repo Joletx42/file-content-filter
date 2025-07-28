@@ -6,9 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
+import com.app.processing.DataTypeDetector;
+import com.app.statistics.StatisticsCollector;
+
 public class DataReaderManager {
     public static void distributeDataFromFiles(List<String> files, File analyzeFilesDir,
-            DataTypeDetector type) {
+            DataTypeDetector types, StatisticsCollector stats) {
         for (var currentFile : files) {
 
             File file = new File(analyzeFilesDir, currentFile);
@@ -18,7 +21,7 @@ public class DataReaderManager {
                     String line;
 
                     while ((line = reader.readLine()) != null) {
-                        analyzeLine(line, type);
+                        analyzeLine(line, types, stats);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -29,7 +32,7 @@ public class DataReaderManager {
         }
     }
 
-    private static void analyzeLine(String line, DataTypeDetector type) {
+    private static void analyzeLine(String line, DataTypeDetector types, StatisticsCollector stats) {
         line = line.trim();
         if (line.isEmpty()) {
             System.out.println("Пустая строка");
@@ -38,17 +41,20 @@ public class DataReaderManager {
 
         try {
             if (DataTypeDetector.isLong(line)) {
-                type.addArr(Long
+                types.addArr(Long
                         .parseLong(line));
+                stats.addIntsCounter();
             } else if (DataTypeDetector.isDouble(line)) {
-                type.addArr(Double
+                types.addArr(Double
                         .parseDouble(line));
+                stats.addDoublesCounter();
             } else {
-                type.addArr(line);
+                types.addArr(line);
+                stats.addStringsCounter();
             }
         } catch (NumberFormatException e) {
             System.out.println("Не удалось распарсить строку: " + line);
-            type.addArr(line); // Можно считать строкой, если парсинг не удался
+            types.addArr(line); // Можно считать строкой, если парсинг не удался
         }
     }
 }

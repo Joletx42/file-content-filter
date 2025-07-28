@@ -11,7 +11,6 @@ import com.app.args.ArgsParser;
 public class DataWriterManager {
     public static void createAndWriteInFile(ArgsParser parser, List<?> dataList, File filesDir, String fileName) {
         if (dataList == null || dataList.isEmpty()) {
-            System.out.println(dataList + ": список пуст");
             return;
         }
 
@@ -30,7 +29,6 @@ public class DataWriterManager {
     private static boolean checkDirectoryExists(File filesDir) {
         if (!filesDir.exists()) {
             if (filesDir.mkdirs()) {
-                System.out.println("Папки созданы: " + filesDir.getAbsolutePath());
                 return true;
             } else {
                 System.out.println("Не удалось создать папки: " + filesDir.getAbsolutePath());
@@ -58,7 +56,6 @@ public class DataWriterManager {
                 bw.write(value.toString());
                 bw.newLine();
             }
-            System.out.println("Данные записаны в файл: " + file.getAbsolutePath());
         } catch (IOException e) {
             System.out.println("Ошибка при записи в файл " + fileName + ": " + e.getMessage());
             e.printStackTrace();

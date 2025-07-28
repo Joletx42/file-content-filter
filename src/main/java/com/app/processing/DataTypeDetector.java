@@ -1,11 +1,12 @@
 package com.app.processing;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DataTypeDetector {
-    private ArrayList<String> stringList = new ArrayList<>();
-    private ArrayList<Long> longList = new ArrayList<>();
-    private ArrayList<Double> doubleList = new ArrayList<>();
+    private List<String> stringList = new ArrayList<>();
+    private List<Long> longList = new ArrayList<>();
+    private List<Double> doubleList = new ArrayList<>();
 
     public void addArr(double number) {
         doubleList.add(number);
@@ -19,15 +20,15 @@ public class DataTypeDetector {
         stringList.add(str);
     }
 
-    public ArrayList<String> getStrList() {
+    public List<String> getStrList() {
         return stringList;
     }
 
-    public ArrayList<Long> getLongList() {
+    public List<Long> getLongList() {
         return longList;
     }
 
-    public ArrayList<Double> getDoubleList() {
+    public List<Double> getDoubleList() {
         return doubleList;
     }
 
