@@ -6,7 +6,7 @@ import com.app.util.TerminalColors;
 
 public class ErrorHandler {
     public static void handle(Exception error) {
-        System.out.println(TerminalColors.colorize("ERROR: Неизвестная ошибка: ", TerminalColors.RED) + error);
+        System.out.println(TerminalColors.colorize("ERROR: ", TerminalColors.RED) + error.getMessage());
     }
 
     public static void noFile(String file) {

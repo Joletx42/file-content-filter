@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.app.error.ErrorHandler;
+import com.app.util.TerminalColors;
 
 public class ArgsParser {
     private final String[] initialArgs;
@@ -30,11 +31,16 @@ public class ArgsParser {
                 if (param != null) {
                     switch (param) {
                         case PATH:
-                            pathToFiles = initialArgs[i + 1];
-                            i++;
-                            break;
                         case PREFIX:
-                            prefix = initialArgs[i + 1];
+                            if (i + 1 >= initialArgs.length) {
+                                throw new IllegalArgumentException(TerminalColors.colorize(
+                                        "Отсутствует значение для параметра: ", TerminalColors.RED) + currentElem);
+                            }
+                            if (param == Parameter.PATH) {
+                                pathToFiles = initialArgs[i + 1];
+                            } else if (param == Parameter.PREFIX) {
+                                prefix = initialArgs[i + 1];
+                            }
                             i++;
                             break;
                         case MODE:
