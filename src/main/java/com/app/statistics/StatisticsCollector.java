@@ -3,6 +3,8 @@ package com.app.statistics;
 import java.util.Collections;
 import java.util.List;
 
+import com.app.util.TerminalColors;
+
 public class StatisticsCollector {
     private int amountStringsInFile = 0;
     private int amountIntsInFile = 0;
@@ -18,9 +20,6 @@ public class StatisticsCollector {
     private boolean flagInts = false;
     private boolean flagDoubles = false;
 
-    private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
     private static final String LINE = "--------------------------------------------------";
 
     public void addIntsCounter() {
@@ -36,38 +35,44 @@ public class StatisticsCollector {
     }
 
     public void printShortSummary() {
-        System.out.println("\n" + ANSI_GREEN + "КОЛИЧЕСТВО ЗАПИСАННЫХ ЭЛЕМЕНТОВ В ФАЙЛЫ" + ANSI_RESET);
-        System.out.println(ANSI_GREEN + LINE + ANSI_RESET);
-        System.out.println(ANSI_PURPLE + "integers.txt: " + amountIntsInFile + ANSI_RESET);
-        System.err.println(ANSI_PURPLE + "floats.txt: " + amountDoublesInFile + ANSI_RESET);
-        System.out.println(ANSI_PURPLE + "strings.txt: " + amountStringsInFile + ANSI_RESET);
+        System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+        System.out.println(TerminalColors.colorize("КОЛИЧЕСТВО ЗАПИСАННЫХ ЭЛЕМЕНТОВ В ФАЙЛЫ", TerminalColors.GREEN));
+        System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+        System.out.println("integers.txt: " + amountIntsInFile);
+        System.err.println("floats.txt: " + amountDoublesInFile);
+        System.out.println("strings.txt: " + amountStringsInFile);
+        System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
     }
 
     public void printFullSummary() {
         printShortSummary();
 
         if (flagInts) {
-            System.out.println("\n" + ANSI_GREEN + "СТАТИСТИКА ЗАПИСАННЫХ ЭЛЕМЕНТОВ В integers.txt" + ANSI_RESET);
-            System.out.println(ANSI_GREEN + LINE + ANSI_RESET);
             System.out.println(
-                    ANSI_PURPLE + "Минимальное значение integers: " + minLong + ANSI_RESET);
+                    TerminalColors.colorize("СТАТИСТИКА ЗАПИСАННЫХ ЭЛЕМЕНТОВ В integers.txt", TerminalColors.GREEN));
+            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
             System.out.println(
-                    ANSI_PURPLE + "Максимальное значение integers: " + maxLong + ANSI_RESET);
-            System.out.println(ANSI_PURPLE + "Сумма integers: " + sumLong + ANSI_RESET);
+                    "Минимальное значение integers: " + minLong);
             System.out.println(
-                    ANSI_PURPLE + "Среднее значение integers: " + averageLong + ANSI_RESET);
+                    "Максимальное значение integers: " + maxLong);
+            System.out.println("Сумма integers: " + sumLong);
+            System.out.println(
+                    "Среднее значение integers: " + averageLong);
+            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
         }
 
         if (flagDoubles) {
-            System.out.println("\n" + ANSI_GREEN + "СТАТИСТИКА ЗАПИСАННЫХ ЭЛЕМЕНТОВ В floats.txt" + ANSI_RESET);
-            System.out.println(ANSI_GREEN + LINE + ANSI_RESET);
             System.out.println(
-                    ANSI_PURPLE + "Минимальное значение floats: " + minDouble + ANSI_RESET);
+                    TerminalColors.colorize("СТАТИСТИКА ЗАПИСАННЫХ ЭЛЕМЕНТОВ В floats.txt", TerminalColors.GREEN));
+            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
             System.out.println(
-                    ANSI_PURPLE + "Максимальное значение floats: " + maxDouble + ANSI_RESET);
-            System.out.println(ANSI_PURPLE + "Сумма floats: " + sumDouble + ANSI_RESET);
+                    "Минимальное значение floats: " + minDouble);
             System.out.println(
-                    ANSI_PURPLE + "Среднее значение floats: " + averageDouble + ANSI_RESET);
+                    "Максимальное значение floats: " + maxDouble);
+            System.out.println("Сумма floats: " + sumDouble);
+            System.out.println(
+                    "Среднее значение floats: " + averageDouble);
+            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
         }
     }
 

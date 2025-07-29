@@ -8,27 +8,34 @@ import com.app.processing.FileProcessing;
 public class Main {
     public static void main(String[] args) {
         try {
-            // Разбор аргументов
-            ArgsParser parser = new ArgsParser(args);
-            parser.parse();
+            if (args.length == 0) {
+                ErrorHandler.emptyArgs();
+            } else {
+                // Разбор аргументов
+                ArgsParser parser = new ArgsParser(args);
+                parser.parse();
 
-            // Обработка файлов
-            FileProcessing processor = new FileProcessing(parser);
-            processor.processFiles();
-
-            // Вывод статистики
-            char statisticsOption = parser.getStatisticsOption();
-            if (statisticsOption == 's' || statisticsOption == 'f') {
-                StatisticsCollector stats = processor.getStatisticsCollector();
-
-                if (statisticsOption == 's') {
-                    stats.printShortSummary();
+                if (parser.getHelpOption()) {
+                    ErrorHandler.printHelp();
                 } else {
-                    stats.printFullSummary();
+
+                    // Обработка файлов
+                    FileProcessing processor = new FileProcessing(parser);
+                    processor.processFiles();
+
+                    // Вывод статистики
+                    char statisticsOption = parser.getStatisticsOption();
+                    if (statisticsOption == 's' || statisticsOption == 'f') {
+                        StatisticsCollector stats = processor.getStatisticsCollector();
+
+                        if (statisticsOption == 's') {
+                            stats.printShortSummary();
+                        } else {
+                            stats.printFullSummary();
+                        }
+                    }
                 }
-
             }
-
         } catch (Exception e) {
             ErrorHandler.handle(e);
         }

@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
+import com.app.error.ErrorHandler;
 import com.app.processing.DataTypeDetector;
 import com.app.statistics.StatisticsCollector;
 
@@ -27,7 +28,7 @@ public class DataReaderManager {
                     e.printStackTrace();
                 }
             } else {
-                System.out.println("Такого файла не существует: " + file);
+                ErrorHandler.noFile(file);
             }
         }
     }

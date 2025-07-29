@@ -5,7 +5,8 @@ public enum Parameter {
     PREFIX("-p"),
     MODE("-a"),
     SHORT("-s"),
-    FULL("-f");
+    FULL("-f"),
+    HELP("-h");
 
     private final String flag;
 

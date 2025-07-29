@@ -11,6 +11,7 @@ public class ArgsParser {
     private String prefix;
     private boolean recordMode = false;
     private char statisticsOption;
+    private boolean helpOption = false;
 
     public ArgsParser(String[] args) {
         this.initialArgs = Arrays.copyOf(args, args.length);
@@ -41,6 +42,9 @@ public class ArgsParser {
                             break;
                         case FULL:
                             statisticsOption = 'f';
+                            break;
+                        case HELP:
+                            helpOption = true;
                             break;
                     }
                 } else {
@@ -81,6 +85,10 @@ public class ArgsParser {
 
     public char getStatisticsOption() {
         return statisticsOption;
+    }
+
+    public boolean getHelpOption() {
+        return helpOption;
     }
 
     private boolean isParameter(String s) {
