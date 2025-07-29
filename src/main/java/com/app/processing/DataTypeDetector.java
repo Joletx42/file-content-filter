@@ -3,6 +3,8 @@ package com.app.processing;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.app.error.ErrorHandler;
+
 public class DataTypeDetector {
     private List<String> stringList = new ArrayList<>();
     private List<Long> longList = new ArrayList<>();
@@ -42,7 +44,7 @@ public class DataTypeDetector {
         try {
             Long.parseLong(str);
             return true;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -51,7 +53,7 @@ public class DataTypeDetector {
         try {
             Double.parseDouble(str);
             return true;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             return false;
         }
     }

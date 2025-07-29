@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.app.args.ArgsParser;
+import com.app.error.ErrorHandler;
 
 public class DataWriterManager {
     public static void createAndWriteInFile(ArgsParser parser, List<?> dataList, File filesDir, String fileName) {
@@ -31,7 +32,7 @@ public class DataWriterManager {
             if (filesDir.mkdirs()) {
                 return true;
             } else {
-                System.out.println("Не удалось создать папки: " + filesDir.getAbsolutePath());
+                ErrorHandler.makeDirsError(filesDir.getAbsolutePath());
                 return false;
             }
         }
@@ -41,12 +42,10 @@ public class DataWriterManager {
 
     private static boolean writeInFile(ArgsParser parser, List<?> dataList, File file, String fileName) {
         if (dataList == null || dataList.isEmpty()) {
-            System.out.println("Список пуст, запись не требуется.");
             return false;
         }
 
         if (file == null) {
-            System.out.println("Файл не задан.");
             return false;
         }
 
@@ -57,8 +56,7 @@ public class DataWriterManager {
                 bw.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Ошибка при записи в файл " + fileName + ": " + e.getMessage());
-            e.printStackTrace();
+            ErrorHandler.writerError(e, fileName);
             return false;
         }
 

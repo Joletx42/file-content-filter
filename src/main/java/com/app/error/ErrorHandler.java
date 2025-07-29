@@ -1,17 +1,46 @@
 package com.app.error;
 
-import com.app.util.TerminalColors;
+import java.io.IOException;
 
-import java.io.File;
+import com.app.util.TerminalColors;
 
 public class ErrorHandler {
     public static void handle(Exception error) {
         System.out.println(TerminalColors.colorize("ERROR: Неизвестная ошибка: ", TerminalColors.RED) + error);
     }
 
-    public static void noFile(File file) {
+    public static void noFile(String file) {
         System.out.println(
                 TerminalColors.colorize("ERROR: Такого файла не существует: ", TerminalColors.RED) + file);
+    }
+
+    public static void unknownParam(String param) {
+        System.out.println(
+                TerminalColors.colorize("ERROR: Неизвестный параметр: ", TerminalColors.RED) + param);
+    }
+
+    public static void unknownArgumentType(String arg) {
+        System.out.println(
+                TerminalColors.colorize("ERROR: Неизвестный тип аргумента: ", TerminalColors.RED) + arg);
+    }
+
+    public static void readerError(IOException e, String fileName) {
+        System.out.println(
+                TerminalColors.colorize("ERROR: Ошибка чтения файла ", TerminalColors.RED) + fileName
+                        + TerminalColors.colorize(": ", TerminalColors.RED)
+                        + e);
+    }
+
+    public static void writerError(IOException e, String fileName) {
+        System.out.println(
+                TerminalColors.colorize("ERROR: Ошибка записи в файл ", TerminalColors.RED) + fileName
+                        + TerminalColors.colorize(": ", TerminalColors.RED)
+                        + e);
+    }
+
+    public static void makeDirsError(String absolutePath) {
+        System.out.println(
+                TerminalColors.colorize("ERROR: Не удалось создать папки: ", TerminalColors.RED) + absolutePath);
     }
 
     public static void emptyArgs() {
@@ -24,7 +53,9 @@ public class ErrorHandler {
 
     public static void printHelp() {
         System.out.println(
-                "Утилита принимает на вход файлы,\n"
+                TerminalColors.colorize("Описание: ", TerminalColors.BLUE)
+                        + "\n"
+                        + "Утилита принимает на вход файлы,\n"
                         + "в которых по строкам содержатся данные разных типов (int, float, строки).\n"
                         + "Она фильтрует эти строки по типам и записывает их в отдельные выходные файлы:\n"
                         + "integers.txt, floats.txt и strings.txt.\n\n"

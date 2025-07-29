@@ -25,10 +25,10 @@ public class DataReaderManager {
                         analyzeLine(line, types, stats);
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    ErrorHandler.readerError(e, currentFile);
                 }
             } else {
-                ErrorHandler.noFile(file);
+                ErrorHandler.noFile(currentFile);
             }
         }
     }
@@ -36,7 +36,6 @@ public class DataReaderManager {
     private static void analyzeLine(String line, DataTypeDetector types, StatisticsCollector stats) {
         line = line.trim();
         if (line.isEmpty()) {
-            System.out.println("Пустая строка");
             return;
         }
 
@@ -53,9 +52,8 @@ public class DataReaderManager {
                 types.addArr(line);
                 stats.addStringsCounter();
             }
-        } catch (NumberFormatException e) {
-            System.out.println("Не удалось распарсить строку: " + line);
-            types.addArr(line); // Можно считать строкой, если парсинг не удался
+        } catch (Exception e) {
+            ErrorHandler.handle(e);
         }
     }
 }

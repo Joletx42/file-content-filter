@@ -18,20 +18,21 @@ public class Main {
                 if (parser.getHelpOption()) {
                     ErrorHandler.printHelp();
                 } else {
-
                     // Обработка файлов
                     FileProcessing processor = new FileProcessing(parser);
                     processor.processFiles();
 
                     // Вывод статистики
-                    char statisticsOption = parser.getStatisticsOption();
-                    if (statisticsOption == 's' || statisticsOption == 'f') {
-                        StatisticsCollector stats = processor.getStatisticsCollector();
+                    if (!processor.checkIsEmptyLists()) {
+                        char statisticsOption = parser.getStatisticsOption();
+                        if (statisticsOption == 's' || statisticsOption == 'f') {
+                            StatisticsCollector stats = processor.getStatisticsCollector();
 
-                        if (statisticsOption == 's') {
-                            stats.printShortSummary();
-                        } else {
-                            stats.printFullSummary();
+                            if (statisticsOption == 's') {
+                                stats.printShortSummary();
+                            } else {
+                                stats.printFullSummary();
+                            }
                         }
                     }
                 }

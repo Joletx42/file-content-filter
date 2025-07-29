@@ -1,12 +1,15 @@
 package com.app.args;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import com.app.error.ErrorHandler;
+
 public class ArgsParser {
     private final String[] initialArgs;
-    private ArrayList<String> fileList = new ArrayList<>();
-    private ArrayList<String> paramList = new ArrayList<>();
+    private List<String> fileList = new ArrayList<>();
+    private List<String> paramList = new ArrayList<>();
     private String pathToFiles;
     private String prefix;
     private boolean recordMode = false;
@@ -48,14 +51,14 @@ public class ArgsParser {
                             break;
                     }
                 } else {
-                    System.out.println(currentElem + ": Неизвестный параметр");
+                    ErrorHandler.unknownParam(currentElem);
                 }
 
                 paramList.add(currentElem);
             } else if (isFile(currentElem)) {
                 fileList.add(currentElem);
             } else {
-                System.out.println((currentElem + ": неизвестный тип аргумента"));
+                ErrorHandler.unknownArgumentType(currentElem);
             }
 
             i++;
@@ -63,11 +66,11 @@ public class ArgsParser {
 
     }
 
-    public ArrayList<String> getFileList() {
+    public List<String> getFileList() {
         return fileList;
     }
 
-    public ArrayList<String> getParamList() {
+    public List<String> getParamList() {
         return paramList;
     }
 

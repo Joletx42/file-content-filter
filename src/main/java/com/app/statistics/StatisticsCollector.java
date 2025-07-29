@@ -9,6 +9,7 @@ public class StatisticsCollector {
     private int amountStringsInFile = 0;
     private int amountIntsInFile = 0;
     private int amountDoublesInFile = 0;
+    private String pathFile = "";
     private long maxLong = 0;
     private long minLong = 0;
     private long sumLong = 0;
@@ -36,11 +37,17 @@ public class StatisticsCollector {
 
     public void printShortSummary() {
         System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
-        System.out.println(TerminalColors.colorize("КОЛИЧЕСТВО ЗАПИСАННЫХ ЭЛЕМЕНТОВ В ФАЙЛЫ", TerminalColors.GREEN));
+        System.out.println(TerminalColors.colorize("КОЛИЧЕСТВО ЗАПИСАННЫХ ЭЛЕМЕНТОВ В ФАЙЛ", TerminalColors.GREEN));
         System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
-        System.out.println("integers.txt: " + amountIntsInFile);
-        System.err.println("floats.txt: " + amountDoublesInFile);
-        System.out.println("strings.txt: " + amountStringsInFile);
+        if (amountIntsInFile != 0) {
+            System.out.println(pathFile + "/integers.txt: " + amountIntsInFile);
+        }
+        if (amountDoublesInFile != 0) {
+            System.out.println(pathFile + "/floats.txt: " + amountDoublesInFile);
+        }
+        if (amountStringsInFile != 0) {
+            System.out.println(pathFile + "/strings.txt: " + amountStringsInFile);
+        }
         System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
     }
 
@@ -76,9 +83,8 @@ public class StatisticsCollector {
         }
     }
 
-    public void collectInts(List<Long> list) {
+    public void collectInts(List<Long> list, String path) {
         if (list == null || list.isEmpty()) {
-            System.out.println("Список пуст");
             return;
         }
 
@@ -92,11 +98,13 @@ public class StatisticsCollector {
         }
 
         averageLong = (double) sumLong / list.size();
+
+        if (path != null)
+            pathFile = path;
     }
 
-    public void collectDoubles(List<Double> list) {
+    public void collectDoubles(List<Double> list, String path) {
         if (list == null || list.isEmpty()) {
-            System.out.println("Список пуст");
             return;
         }
 
@@ -108,6 +116,9 @@ public class StatisticsCollector {
         for (var elem : list) {
             sumDouble += elem;
         }
+
+        if (path != null)
+            pathFile = path;
 
         averageDouble = sumDouble / list.size();
     }

@@ -31,8 +31,8 @@ public class FileProcessing {
         List<Double> doubleList = types.getDoubleList();
         List<String> strList = types.getStrList();
 
-        stats.collectInts(longList);
-        stats.collectDoubles(doubleList);
+        stats.collectInts(longList, parser.getPathToFiles());
+        stats.collectDoubles(doubleList, parser.getPathToFiles());
 
         String currentDir = System.getProperty("user.dir");
         String pathToFiles = parser.getPathToFiles();
@@ -54,5 +54,9 @@ public class FileProcessing {
 
     public StatisticsCollector getStatisticsCollector() {
         return stats;
+    }
+
+    public boolean checkIsEmptyLists() {
+        return types.getStrList().isEmpty() && types.getLongList().isEmpty() && types.getDoubleList().isEmpty();
     }
 }
