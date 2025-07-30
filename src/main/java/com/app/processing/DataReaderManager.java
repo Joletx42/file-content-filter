@@ -18,14 +18,18 @@ public class DataReaderManager {
             File file = new File(analyzeFilesDir, currentFile);
 
             if (file.exists()) {
-                try (BufferedReader reader = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
-                    String line;
+                if (file.length() == 0) {
+                    ErrorHandler.emptyFile(currentFile);
+                } else {
+                    try (BufferedReader reader = new BufferedReader(new FileReader(file.getAbsolutePath()))) {
+                        String line;
 
-                    while ((line = reader.readLine()) != null) {
-                        analyzeLine(line, types, stats);
+                        while ((line = reader.readLine()) != null) {
+                            analyzeLine(line, types, stats);
+                        }
+                    } catch (IOException e) {
+                        ErrorHandler.readerError(e, currentFile);
                     }
-                } catch (IOException e) {
-                    ErrorHandler.readerError(e, currentFile);
                 }
             } else {
                 ErrorHandler.noFile(currentFile);

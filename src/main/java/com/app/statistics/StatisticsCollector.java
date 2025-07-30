@@ -3,8 +3,6 @@ package com.app.statistics;
 import java.util.Collections;
 import java.util.List;
 
-import com.app.util.TerminalColors;
-
 public class StatisticsCollector {
     private int amountStringsInFile = 0;
     private int amountIntsInFile = 0;
@@ -42,9 +40,9 @@ public class StatisticsCollector {
     }
 
     public void printShortSummary() {
-        System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
-        System.out.println(TerminalColors.colorize("КОЛИЧЕСТВО ЗАПИСАННЫХ ЭЛЕМЕНТОВ В ФАЙЛ", TerminalColors.GREEN));
-        System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+        System.out.println(LINE);
+        System.out.println("КОЛИЧЕСТВО ЗАПИСАННЫХ ЭЛЕМЕНТОВ В ФАЙЛ");
+        System.out.println(LINE);
         if (amountIntsInFile != 0) {
             System.out.println(pathFile + "/" + fileIntsName + ": " + amountIntsInFile);
         }
@@ -54,7 +52,7 @@ public class StatisticsCollector {
         if (amountStringsInFile != 0) {
             System.out.println(pathFile + "/" + fileStringsName + ": " + amountStringsInFile);
         }
-        System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+        System.out.println(LINE);
     }
 
     public void printFullSummary() {
@@ -62,8 +60,8 @@ public class StatisticsCollector {
 
         if (flagInts) {
             System.out.println(
-                    TerminalColors.colorize("СТАТИСТИКА ЗАПИСАННЫХ ЭЛЕМЕНТОВ В integers.txt", TerminalColors.GREEN));
-            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+                    "СТАТИСТИКА ЗАПИСАННЫХ ЭЛЕМЕНТОВ В integers.txt");
+            System.out.println(LINE);
             System.out.println(
                     "Минимальное значение integers: " + minLong);
             System.out.println(
@@ -71,13 +69,13 @@ public class StatisticsCollector {
             System.out.println("Сумма integers: " + sumLong);
             System.out.println(
                     "Среднее значение integers: " + averageLong);
-            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+            System.out.println(LINE);
         }
 
         if (flagDoubles) {
             System.out.println(
-                    TerminalColors.colorize("СТАТИСТИКА ЗАПИСАННЫХ ЭЛЕМЕНТОВ В floats.txt", TerminalColors.GREEN));
-            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+                    "СТАТИСТИКА ЗАПИСАННЫХ ЭЛЕМЕНТОВ В floats.txt");
+            System.out.println(LINE);
             System.out.println(
                     "Минимальное значение floats: " + minDouble);
             System.out.println(
@@ -85,16 +83,16 @@ public class StatisticsCollector {
             System.out.println("Сумма floats: " + sumDouble);
             System.out.println(
                     "Среднее значение floats: " + averageDouble);
-            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+            System.out.println(LINE);
         }
 
         if (flagStrings) {
             System.out.println(
-                    TerminalColors.colorize("СТАТИСТИКА ЗАПИСАННЫХ ЭЛЕМЕНТОВ В strings.txt", TerminalColors.GREEN));
-            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+                    "СТАТИСТИКА ЗАПИСАННЫХ ЭЛЕМЕНТОВ В strings.txt");
+            System.out.println(LINE);
             System.out.println("Длина самой короткой строки: " + minStrLength);
             System.out.println("Длина самой длинной строки: " + maxStrLength);
-            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+            System.out.println(LINE);
         }
     }
 
