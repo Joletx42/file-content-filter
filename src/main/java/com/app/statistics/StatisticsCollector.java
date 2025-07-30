@@ -18,8 +18,11 @@ public class StatisticsCollector {
     private double averageLong = 0.0;
     private double averageDouble = 0.0;
     private double sumDouble = 0.0;
+    private int minStrLength = 0;
+    private int maxStrLength = 0;
     private boolean flagInts = false;
     private boolean flagDoubles = false;
+    private boolean flagStrings = false;
 
     private static final String LINE = "--------------------------------------------------";
 
@@ -81,6 +84,15 @@ public class StatisticsCollector {
                     "Среднее значение floats: " + averageDouble);
             System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
         }
+
+        if (flagStrings) {
+            System.out.println(
+                    TerminalColors.colorize("СТАТИСТИКА ЗАПИСАННЫХ ЭЛЕМЕНТОВ В strings.txt", TerminalColors.GREEN));
+            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+            System.out.println("Длина самой короткой строки: " + minStrLength);
+            System.out.println("Длина самой длинной строки: " + maxStrLength);
+            System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
+        }
     }
 
     public void collectInts(List<Long> list, String path) {
@@ -121,5 +133,27 @@ public class StatisticsCollector {
             pathFile = path;
 
         averageDouble = sumDouble / list.size();
+    }
+
+    public void collectStrings(List<String> list, String path) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+
+        flagStrings = true;
+
+        minStrLength = list.get(0).length();
+        maxStrLength = list.get(0).length();
+        for (String elem : list) {
+            if (elem.length() < minStrLength) {
+                minStrLength = elem.length();
+            }
+            if (elem.length() > maxStrLength) {
+                maxStrLength = elem.length();
+            }
+        }
+
+        if (path != null)
+            pathFile = path;
     }
 }

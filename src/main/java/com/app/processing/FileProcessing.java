@@ -33,6 +33,7 @@ public class FileProcessing {
 
         stats.collectInts(longList, parser.getPathToFiles());
         stats.collectDoubles(doubleList, parser.getPathToFiles());
+        stats.collectStrings(strList, parser.getPathToFiles());
 
         String currentDir = System.getProperty("user.dir");
         String pathToFiles = parser.getPathToFiles();
