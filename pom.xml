@@ -11,7 +11,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.4.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -28,7 +28,7 @@
                     <source>21</source>
                     <target>21</target>
                 </configuration>
-                </plugin>
+            </plugin>
         </plugins>
 
         <finalName>util</finalName>
