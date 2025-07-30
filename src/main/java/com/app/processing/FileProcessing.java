@@ -31,10 +31,6 @@ public class FileProcessing {
         List<Double> doubleList = types.getDoubleList();
         List<String> strList = types.getStrList();
 
-        stats.collectInts(longList, parser.getPathToFiles());
-        stats.collectDoubles(doubleList, parser.getPathToFiles());
-        stats.collectStrings(strList, parser.getPathToFiles());
-
         String currentDir = System.getProperty("user.dir");
         String pathToFiles = parser.getPathToFiles();
 
@@ -48,9 +44,17 @@ public class FileProcessing {
         String prefixFileName = parser.getPrefix();
         String prefix = (prefixFileName != null) ? prefixFileName : "";
 
-        DataWriterManager.createAndWriteInFile(parser, longList, newFilesDir, prefix + "integers.txt");
-        DataWriterManager.createAndWriteInFile(parser, doubleList, newFilesDir, prefix + "floats.txt");
-        DataWriterManager.createAndWriteInFile(parser, strList, newFilesDir, prefix + "strings.txt");
+        String fileIntsName = prefix + "integers.txt";
+        String fileFloatsName = prefix + "floats.txt";
+        String fileStringsName = prefix + "strings.txt";
+
+        stats.collectInts(longList, parser.getPathToFiles(), fileIntsName);
+        stats.collectDoubles(doubleList, parser.getPathToFiles(), fileFloatsName);
+        stats.collectStrings(strList, parser.getPathToFiles(), fileStringsName);
+
+        DataWriterManager.createAndWriteInFile(parser, longList, newFilesDir, fileIntsName);
+        DataWriterManager.createAndWriteInFile(parser, doubleList, newFilesDir, fileFloatsName);
+        DataWriterManager.createAndWriteInFile(parser, strList, newFilesDir, fileStringsName);
     }
 
     public StatisticsCollector getStatisticsCollector() {

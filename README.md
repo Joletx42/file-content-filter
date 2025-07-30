@@ -33,7 +33,7 @@
 Пример запуска утилиты с передачей входных файлов и параметров:
 
 ```
-java -jar uXl.jar -s -a -p sample- in1.txt in2.txt
+java -jar .\target\util.jar -s -a -p sample- in1.txt in2.txt
 ```
 
 Основные опции:

@@ -9,7 +9,6 @@ public class StatisticsCollector {
     private int amountStringsInFile = 0;
     private int amountIntsInFile = 0;
     private int amountDoublesInFile = 0;
-    private String pathFile = "";
     private long maxLong = 0;
     private long minLong = 0;
     private long sumLong = 0;
@@ -23,6 +22,10 @@ public class StatisticsCollector {
     private boolean flagInts = false;
     private boolean flagDoubles = false;
     private boolean flagStrings = false;
+    private String pathFile = "";
+    private String fileIntsName = "integers.txt";
+    private String fileDoublesName = "floats.txt";
+    private String fileStringsName = "strings.txt";
 
     private static final String LINE = "--------------------------------------------------";
 
@@ -43,13 +46,13 @@ public class StatisticsCollector {
         System.out.println(TerminalColors.colorize("КОЛИЧЕСТВО ЗАПИСАННЫХ ЭЛЕМЕНТОВ В ФАЙЛ", TerminalColors.GREEN));
         System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
         if (amountIntsInFile != 0) {
-            System.out.println(pathFile + "/integers.txt: " + amountIntsInFile);
+            System.out.println(pathFile + "/" + fileIntsName + ": " + amountIntsInFile);
         }
         if (amountDoublesInFile != 0) {
-            System.out.println(pathFile + "/floats.txt: " + amountDoublesInFile);
+            System.out.println(pathFile + "/" + fileDoublesName + ": " + amountDoublesInFile);
         }
         if (amountStringsInFile != 0) {
-            System.out.println(pathFile + "/strings.txt: " + amountStringsInFile);
+            System.out.println(pathFile + "/" + fileStringsName + ": " + amountStringsInFile);
         }
         System.out.println(TerminalColors.colorize(LINE, TerminalColors.GREEN));
     }
@@ -95,7 +98,7 @@ public class StatisticsCollector {
         }
     }
 
-    public void collectInts(List<Long> list, String path) {
+    public void collectInts(List<Long> list, String path, String fileName) {
         if (list == null || list.isEmpty()) {
             return;
         }
@@ -113,9 +116,13 @@ public class StatisticsCollector {
 
         if (path != null)
             pathFile = path;
+
+        if (fileName != null) {
+            fileIntsName = fileName;
+        }
     }
 
-    public void collectDoubles(List<Double> list, String path) {
+    public void collectDoubles(List<Double> list, String path, String fileName) {
         if (list == null || list.isEmpty()) {
             return;
         }
@@ -132,10 +139,14 @@ public class StatisticsCollector {
         if (path != null)
             pathFile = path;
 
+        if (fileName != null) {
+            fileDoublesName = fileName;
+        }
+
         averageDouble = sumDouble / list.size();
     }
 
-    public void collectStrings(List<String> list, String path) {
+    public void collectStrings(List<String> list, String path, String fileName) {
         if (list == null || list.isEmpty()) {
             return;
         }
@@ -155,5 +166,9 @@ public class StatisticsCollector {
 
         if (path != null)
             pathFile = path;
+
+        if (fileName != null) {
+            fileStringsName = fileName;
+        }
     }
 }
