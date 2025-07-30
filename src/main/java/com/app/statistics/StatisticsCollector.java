@@ -44,13 +44,13 @@ public class StatisticsCollector {
         System.out.println("КОЛИЧЕСТВО ЗАПИСАННЫХ ЭЛЕМЕНТОВ В ФАЙЛ");
         System.out.println(LINE);
         if (amountIntsInFile != 0) {
-            System.out.println(pathFile + "/" + fileIntsName + ": " + amountIntsInFile);
+            System.out.println(pathFile + "\\" + fileIntsName + ": " + amountIntsInFile);
         }
         if (amountDoublesInFile != 0) {
-            System.out.println(pathFile + "/" + fileDoublesName + ": " + amountDoublesInFile);
+            System.out.println(pathFile + "\\" + fileDoublesName + ": " + amountDoublesInFile);
         }
         if (amountStringsInFile != 0) {
-            System.out.println(pathFile + "/" + fileStringsName + ": " + amountStringsInFile);
+            System.out.println(pathFile + "\\" + fileStringsName + ": " + amountStringsInFile);
         }
         System.out.println(LINE);
     }
