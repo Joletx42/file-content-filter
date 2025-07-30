@@ -41,7 +41,7 @@ public class StatisticsCollector {
 
     public void printShortSummary() {
         System.out.println(LINE);
-        System.out.println("КОЛИЧЕСТВО ЗАПИСАННЫХ ЭЛЕМЕНТОВ В ФАЙЛ");
+        System.out.println("КОЛИЧЕСТВО ЗАПИСАННЫХ ЭЛЕМЕНТОВ В ФАЙЛ(-Ы)");
         System.out.println(LINE);
         if (amountIntsInFile != 0) {
             System.out.println(pathFile + "\\" + fileIntsName + ": " + amountIntsInFile);
